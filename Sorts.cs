@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,8 +9,6 @@ namespace SortingAlgorithms
 {
     public static class Sorts
     {
-        public delegate int[] SortDelegate(int[] arr);
-
         public static int[] QuickSort(int[] input)
         {
             if (input.Length <= 1)
@@ -54,7 +53,69 @@ namespace SortingAlgorithms
                 }
             }
         }
-        public static SortDelegate quickSortDelegate = QuickSort;
+
+        public static int[] MergeSort(int[] input)
+        {
+            if (input.Length <= 1)
+                return input;
+
+            int[] arr = new int[input.Length];
+            input.CopyTo(arr, 0);
+
+            return Sort(arr);
+
+            int[] Sort(int[] arr)
+            {
+                if (arr.Length <= 1)
+                    return arr;
+
+                int[] arr1 = arr.Take(arr.Length / 2).ToArray();
+                int[] arr2 = arr.Skip(arr.Length / 2).ToArray();
+
+                arr1 = Sort(arr1);
+                arr2 = Sort(arr2);
+                return Merge(arr1, arr2);
+            }
+
+            int[] Merge(int[] arr1, int[] arr2)
+            {
+                int index1, index2, index3;
+                index1 = index2 = index3 = 0;
+                int[] arr3 = new int[arr1.Length + arr2.Length];
+                while (index1 < arr1.Length && index2 < arr2.Length)
+                {
+                    if (arr1[index1] < arr2[index2])
+                    {
+                        arr3[index3] = arr1[index1];
+                        index1++;
+                    }
+                    else
+                    {
+                        arr3[index3] = arr2[index2];
+                        index2++;
+                    }
+                    index3++;
+                }
+                if (index1 < arr1.Length)
+                {
+                    for (; index1 < arr1.Length; index1++)
+                    {
+                        arr3[index3] = arr1[index1];
+                        index3++;
+                    }
+                }
+                else if (index2 < arr2.Length)
+                {
+                    for (; index2 < arr2.Length; index2++)
+                    {
+                        arr3[index3] = arr2[index2];
+                        index3++;
+                    }
+                }
+
+                return arr3;
+            }
+        }
 
         public static int[] BubbleSort(int[] input)
         {
@@ -87,7 +148,6 @@ namespace SortingAlgorithms
                 return false;
             }
         }
-        public static SortDelegate bubbleSortDelegate = BubbleSort;
 
         public static int[] SelectionSort(int[] input)
         {
@@ -110,7 +170,8 @@ namespace SortingAlgorithms
 
             return arr;
         }
-        public static SortDelegate selectionSortDelegate = SelectionSort;
+
+        public delegate int[] SortDelegate(int[] arr);
 
         private static void Swap(int[] arr, int index1, int index2)
         {
