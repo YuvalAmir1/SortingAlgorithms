@@ -9,6 +9,7 @@ namespace SortingAlgorithms
 {
     public static class Sorts
     {
+        public delegate int[] SortDelegate(int[] arr);
         public static int[] QuickSort(int[] input)
         {
             if (input.Length <= 1)
@@ -170,8 +171,6 @@ namespace SortingAlgorithms
 
             return arr;
         }
-
-        public delegate int[] SortDelegate(int[] arr);
 
         private static void Swap(int[] arr, int index1, int index2)
         {

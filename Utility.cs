@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,16 +34,15 @@ namespace SortingAlgorithms
             return output;
         }
 
-        public static (bool valid, int[] failedArray, int[] attemptedSort) ValidateSort(Sorts.SortDelegate sort, int numberOfTests, int minArrayLength, int maxArrayLength, int minValue, int maxValue)
+        public static (bool valid, int[] failedArray, int[] attemptedSort) ValidateSort(Sorts.SortDelegate sort, int[][] dataSet)
         {
-            Random rng = new Random(); 
-            for (int i = 0; i < numberOfTests; i++)
+            Random rng = new Random();
+            for (int i = 0; i < dataSet.Length; i++)
             {
-                int[] arr = GenerateRandomArray(rng.Next(minArrayLength, maxArrayLength), minValue, maxValue);
-                int[] sortedArr = sort(arr);
+                int[] sortedArr = sort(dataSet[i]);
 
                 if (!Validate(sortedArr))
-                    return (false, arr, sortedArr);
+                    return (false, dataSet[i], sortedArr);
             }
             return (true, Array.Empty<int>(), Array.Empty<int>());
 
@@ -56,7 +56,39 @@ namespace SortingAlgorithms
                         return false;
                 }
                 return true;
-            }
+            } 
+        } 
+
+        public static int[][] GenerateDataSet(int arrayCount, int arrayLength, int minValue, int maxValue)
+        {
+            int[][] arr = new int[arrayCount][];
+            for (int i = 0; i < arrayCount; i++)
+                arr[i] = GenerateRandomArray(arrayLength, minValue, maxValue);
+            return arr;
+        }
+
+        public static double AverageSortTimeMs(Sorts.SortDelegate sort, int[][] dataSet)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            for (int i = 0; i < dataSet.Length; i++)
+                sort(dataSet[i]);
+            stopwatch.Stop();
+            return (double)stopwatch.ElapsedMilliseconds / dataSet.Length;
+        }
+
+        public static void BenchmarkSort(Sorts.SortDelegate sort, int[] lengths, int[] arrayCounts)
+        {
+            int minValue = -1000;
+            int maxValue = 1000;
+
+            for (int i = 0; i < lengths.Length; i++)
+            {
+                int[][] dataSet = GenerateDataSet(arrayCounts[i], lengths[i], minValue, maxValue);
+                double result = AverageSortTimeMs(sort, dataSet);
+                Console.WriteLine($"Average time for array of size {lengths[i]}: {result}ms");
+            }    
+
         }
     }
 }
