@@ -12,6 +12,9 @@ namespace SortingAlgorithms
 
         public static int[] QuickSort(int[] input)
         {
+            if (input.Length <= 1)
+                return input;
+
             int[] arr = new int[input.Length];
             input.CopyTo(arr, 0);
             Recurion(0, arr.Length - 1);
@@ -55,6 +58,9 @@ namespace SortingAlgorithms
 
         public static int[] BubbleSort(int[] input)
         {
+            if (input.Length <= 1)
+                return input;
+
             int[] arr = new int[input.Length];
             input.CopyTo(arr, 0);
             bool sorted = false;
@@ -82,6 +88,29 @@ namespace SortingAlgorithms
             }
         }
         public static SortDelegate bubbleSortDelegate = BubbleSort;
+
+        public static int[] SelectionSort(int[] input)
+        {
+            if (input.Length <= 1)
+                return input;
+
+            int[] arr = new int[input.Length];
+            input.CopyTo(arr, 0);
+            int smallestElementIndex;
+            for (int edge = 0; edge < arr.Length - 1; edge++)
+            {
+                smallestElementIndex = edge;
+                for (int i = edge + 1; i < arr.Length; i++)
+                {
+                    if (arr[i] <= arr[smallestElementIndex])
+                        smallestElementIndex = i;
+                }
+                Swap(arr, edge, smallestElementIndex);
+            }
+
+            return arr;
+        }
+        public static SortDelegate selectionSortDelegate = SelectionSort;
 
         private static void Swap(int[] arr, int index1, int index2)
         {
