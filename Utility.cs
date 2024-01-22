@@ -69,12 +69,11 @@ namespace SortingAlgorithms
 
         public static double AverageSortTimeMs(Sorts.SortDelegate sort, int[][] dataSet)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            long startTime = Stopwatch.GetTimestamp();
             for (int i = 0; i < dataSet.Length; i++)
                 sort(dataSet[i]);
-            stopwatch.Stop();
-            return (double)stopwatch.ElapsedMilliseconds / dataSet.Length;
+            TimeSpan elapsedTime = Stopwatch.GetElapsedTime(startTime);
+            return elapsedTime.TotalMilliseconds / dataSet.Length;
         }
 
         public static void BenchmarkSort(Sorts.SortDelegate sort, int[] lengths, int[] arrayCounts)
