@@ -17,41 +17,36 @@ namespace SortingAlgorithms
 
             int[] arr = new int[input.Length];
             input.CopyTo(arr, 0);
-            Recurion(0, arr.Length - 1);
+            Recursion(0, arr.Length - 1);
             return arr;
 
-            void Recurion(int startIndex, int endIndex)
+            void Recursion(int startIndex, int endIndex)
             {
-                int pivot = PositionPivot();
+                int pivotValue = arr[endIndex];
+                int pivot = -1;
+                int searcher = 0;
+
+                while (searcher <= endIndex)
+                {
+                    if (arr[searcher] > pivotValue)
+                        searcher++;
+                    else
+                    {
+                        pivot++;
+                        if (pivot < searcher)
+                            Swap(arr, pivot, searcher);
+                        else searcher++;
+                    }
+                }
+
                 int startDistance = pivot - startIndex;
                 int endDistance = endIndex - pivot;
 
                 if (startDistance >= 2)
-                    Recurion(startIndex, pivot - 1);
+                    Recursion(startIndex, pivot - 1);
                 if (endDistance >= 2)
-                    Recurion(pivot + 1, endIndex);
+                    Recursion(pivot + 1, endIndex);
 
-                int PositionPivot()
-                {
-                    int pivotValue = arr[endIndex];
-                    int movingPivot = -1;
-                    int searcher = 0;
-
-                    while (searcher <= endIndex)
-                    {
-                        if (arr[searcher] > pivotValue)
-                            searcher++;
-                        else
-                        {
-                            movingPivot++;
-                            if (movingPivot < searcher)
-                                Swap(arr, movingPivot, searcher);
-                            else searcher++;
-                        }
-                    }
-
-                    return movingPivot;
-                }
             }
         }
 
@@ -97,21 +92,16 @@ namespace SortingAlgorithms
                     }
                     index3++;
                 }
-                if (index1 < arr1.Length)
+
+                for (; index1 < arr1.Length; index1++)
                 {
-                    for (; index1 < arr1.Length; index1++)
-                    {
-                        arr3[index3] = arr1[index1];
-                        index3++;
-                    }
+                    arr3[index3] = arr1[index1];
+                    index3++;
                 }
-                else if (index2 < arr2.Length)
+                for (; index2 < arr2.Length; index2++)
                 {
-                    for (; index2 < arr2.Length; index2++)
-                    {
-                        arr3[index3] = arr2[index2];
-                        index3++;
-                    }
+                    arr3[index3] = arr2[index2];
+                    index3++;
                 }
 
                 return arr3;

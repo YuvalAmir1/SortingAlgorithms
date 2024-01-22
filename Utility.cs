@@ -59,7 +59,7 @@ namespace SortingAlgorithms
             } 
         } 
 
-        public static int[][] GenerateDataSet(int arrayCount, int arrayLength, int minValue, int maxValue)
+        public static int[][] GenerateDataSet(int arrayLength, int arrayCount, int minValue, int maxValue)
         {
             int[][] arr = new int[arrayCount][];
             for (int i = 0; i < arrayCount; i++)
@@ -84,7 +84,7 @@ namespace SortingAlgorithms
 
             for (int i = 0; i < lengths.Length; i++)
             {
-                int[][] dataSet = GenerateDataSet(arrayCounts[i], lengths[i], minValue, maxValue);
+                int[][] dataSet = GenerateDataSet(lengths[i], arrayCounts[i], minValue, maxValue);
                 double result = AverageSortTimeMs(sort, dataSet);
                 Console.WriteLine($"Average time for array of size {lengths[i]}: {result}ms");
             }    

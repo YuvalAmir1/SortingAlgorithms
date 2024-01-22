@@ -1,5 +1,18 @@
 ﻿using SortingAlgorithms;
 
-int[] lengths = { 5, 10, 100, 500, 1000, 10_000, 100_000 };
-int[] counts = { 10_000, 10_000, 1000, 1000, 1000, 50, 10};
-Utility.BenchmarkSort(Sorts.QuickSort, lengths, counts);
+int[] longLengths = { 5, 10, 100, 500, 1000, 10_000, 100_000 };
+int[] longCounts = { 10_000, 10_000, 10_000, 1000, 1000, 50, 10};
+int[] shortLengths = { 5, 10, 100, 500, 1000, 10_000 };
+int[] shortCounts = { 10_000, 10_000, 1000, 100, 20, 5};
+
+Console.WriteLine("Quick Sort:");
+Utility.BenchmarkSort(Sorts.QuickSort, longLengths, longCounts);
+Console.WriteLine();
+Console.WriteLine("Merge Sort:");
+Utility.BenchmarkSort(Sorts.MergeSort, longLengths, longCounts);
+Console.WriteLine();
+Console.WriteLine("Bubble Sort:");
+Utility.BenchmarkSort(Sorts.BubbleSort, shortLengths, shortCounts);
+Console.WriteLine();
+Console.WriteLine("Selection Sort:");
+Utility.BenchmarkSort(Sorts.SelectionSort, shortLengths, shortCounts);
