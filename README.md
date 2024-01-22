@@ -1,37 +1,47 @@
 This is just a personal project for practice, but feel free to take a look :D
 
-I benchmarked the sorts and Quick Sort seems unusually slow. Looking into it.
+Improved Quick Sort:
+-Average time for array of size 5: 0.00018ms
+-Average time for array of size 10: 0.00051ms
+-Average time for array of size 100: 0.00844ms
+-Average time for array of size 500: 0.06132ms
+-Average time for array of size 1,000: 0.13006ms
+-Average time for array of size 10,000: 1.56961ms
+-Average time for array of size 100,000: 19.87924ms
+-Average time for array of size 1,000,000: 631.58489ms
 
-Quick Sort:
-- Average time for array of size 5: 0.00037729ms
-- Average time for array of size 10: 0.000704ms
-- Average time for array of size 100: 0.03636718ms
-- Average time for array of size 500: 0.8039197ms
-- Average time for array of size 1,000: 1.6105979ms
-- Average time for array of size 10,000: 157.63654ms
-- Average time for array of size 100,000: 15818.36668ms
+-Quick Sort:
+-Average time for array of size 5: 0.00014ms
+-Average time for array of size 10: 0.00038ms
+-Average time for array of size 100: 0.00812ms
+-Average time for array of size 500: 0.05449ms
+-Average time for array of size 1,000: 0.11671ms
+-Average time for array of size 10,000: 1.53627ms
+-Average time for array of size 100,000: 22.95052ms
+-Average time for array of size 1,000,000: 896.51932ms
 
-Merge Sort:
-- Average time for array of size 5: 0.0019278ms
-- Average time for array of size 10: 0.00300766ms
-- Average time for array of size 100: 0.02663141ms
-- Average time for array of size 500: 0.1130785ms
-- Average time for array of size 1,000: 0.2336356ms
-- Average time for array of size 10,000: 2.96745ms
-- Average time for array of size 100,000: 32.04006ms
+-Merge Sort:
+-Average time for array of size 5: 0.002ms
+-Average time for array of size 10: 0.00256ms
+-Average time for array of size 100: 0.03291ms
+-Average time for array of size 500: 0.10549ms
+-Average time for array of size 1,000: 0.21241ms
+-Average time for array of size 10,000: 2.54982ms
+-Average time for array of size 100,000: 30.89351ms
+-Average time for array of size 1,000,000: 563.58038ms
 
-Bubble Sort:
-- Average time for array of size 5: 0.00020504ms
-- Average time for array of size 10: 0.00068924ms
-- Average time for array of size 100: 0.0682296ms
-- Average time for array of size 500: 1.442268ms
-- Average time for array of size 1,000: 6.2034ms
-- Average time for array of size 10,000: 628.12896ms
- 
-Selection Sort:
-- Average time for array of size 5: 0.00016243ms
-- Average time for array of size 10: 0.00046449ms
-- Average time for array of size 100: 0.0202434ms
-- Average time for array of size 500: 0.365045ms
-- Average time for array of size 1,000: 1.474105ms
-- Average time for array of size 10,000: 133.62154ms
+-Selection Sort:
+-Average time for array of size 5: 0.00203ms
+-Average time for array of size 10: 0.00056ms
+-Average time for array of size 100: 0.03083ms
+-Average time for array of size 500: 0.56568ms
+-Average time for array of size 1,000: 2.10823ms
+-Average time for array of size 10,000: 219.85634ms
+
+-Bubble Sort:
+-Average time for array of size 5: 0.00028ms
+-Average time for array of size 10: 0.00118ms
+-Average time for array of size 100: 0.10334ms
+-Average time for array of size 500: 2.46091ms
+-Average time for array of size 1,000: 10.4642ms
+-Average time for array of size 10,000: 1094.41172ms

@@ -39,7 +39,7 @@ namespace SortingAlgorithms
             Random rng = new Random();
             for (int i = 0; i < dataSet.Length; i++)
             {
-                int[] sortedArr = sort(dataSet[i]);
+                int[] sortedArr = sort(dataSet[i], false);
 
                 if (!Validate(sortedArr))
                     return (false, dataSet[i], sortedArr);
@@ -71,7 +71,7 @@ namespace SortingAlgorithms
         {
             long startTime = Stopwatch.GetTimestamp();
             for (int i = 0; i < dataSet.Length; i++)
-                sort(dataSet[i]);
+                sort(dataSet[i], true);
             TimeSpan elapsedTime = Stopwatch.GetElapsedTime(startTime);
             return elapsedTime.TotalMilliseconds / dataSet.Length;
         }
@@ -85,7 +85,8 @@ namespace SortingAlgorithms
             {
                 int[][] dataSet = GenerateDataSet(lengths[i], arrayCounts[i], minValue, maxValue);
                 double result = AverageSortTimeMs(sort, dataSet);
-                Console.WriteLine($"Average time for array of size {lengths[i]}: {result}ms");
+                result = Math.Round(result, 5);
+                Console.WriteLine($"Average time for array of size {lengths[i]:n0}: {result}ms");
             }    
 
         }
