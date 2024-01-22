@@ -10,6 +10,11 @@ Improved Quick Sort:
 -Average time for array of size 100,000: 19.87924ms
 -Average time for array of size 1,000,000: 631.58489ms
 
+8:
+Average time for array of size 10,000: 1.55901ms
+Average time for array of size 100,000: 18.40169ms
+Average time for array of size 1,000,000: 515.05383ms
+
 -Quick Sort:
 -Average time for array of size 5: 0.00014ms
 -Average time for array of size 10: 0.00038ms

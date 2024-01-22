@@ -90,5 +90,23 @@ namespace SortingAlgorithms
             }    
 
         }
+
+        public static void BenchmarkSorts(int[] longLengths, int[] longCounts, int[] shortLengths, int[] shortCounts)
+        {
+            Console.WriteLine("Improved Quick Sort:");
+            Utility.BenchmarkSort(Sorts.ImprovedQuickSort, longLengths, longCounts);
+            Console.WriteLine();
+            Console.WriteLine("Quick Sort:");
+            Utility.BenchmarkSort(Sorts.QuickSort, longLengths, longCounts);
+            Console.WriteLine();
+            Console.WriteLine("Merge Sort:");
+            Utility.BenchmarkSort(Sorts.MergeSort, longLengths, longCounts);
+            Console.WriteLine();
+            Console.WriteLine("Selection Sort:");
+            Utility.BenchmarkSort(Sorts.SelectionSort, shortLengths, shortCounts);
+            Console.WriteLine();
+            Console.WriteLine("Bubble Sort:");
+            Utility.BenchmarkSort(Sorts.BubbleSort, shortLengths, shortCounts);
+        }
     }
 }
