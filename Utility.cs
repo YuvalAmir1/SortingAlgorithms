@@ -4,6 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.ExceptionServices;
+using System.Xml.XPath;
+using System.Data;
 
 namespace SortingAlgorithms
 {
@@ -34,15 +38,21 @@ namespace SortingAlgorithms
             return output;
         }
 
-        public static (bool valid, int[] failedArray, int[] attemptedSort) ValidateSort(Sorts.SortDelegate sort, int[][] dataSet)
+        public static (bool valid, int[] failedArray, int[] attemptedSort) ValidateSort(Sorts.SortDelegate sort)
         {
             Random rng = new Random();
-            for (int i = 0; i < dataSet.Length; i++)
-            {
-                int[] sortedArr = sort(dataSet[i], false);
+            int[][] dataSet;
 
-                if (!Validate(sortedArr))
-                    return (false, dataSet[i], sortedArr);
+            for (int i = 0; i <= 100; i++)
+            {
+                dataSet = GenerateDataSet(i, 10_000, -100, 100);
+                for (int r = 0; r < dataSet.Length; r++)
+                {
+                    int[] sortedArr = sort(dataSet[r], false);
+
+                    if (!Validate(sortedArr))
+                        return (false, dataSet[r], sortedArr);
+                }
             }
             return (true, Array.Empty<int>(), Array.Empty<int>());
 
@@ -56,8 +66,8 @@ namespace SortingAlgorithms
                         return false;
                 }
                 return true;
-            } 
-        } 
+            }
+        }
 
         public static int[][] GenerateDataSet(int arrayLength, int arrayCount, int minValue, int maxValue)
         {
@@ -87,26 +97,92 @@ namespace SortingAlgorithms
                 double result = AverageSortTimeMs(sort, dataSet);
                 result = Math.Round(result, 5);
                 Console.WriteLine($"Average time for array of size {lengths[i]:n0}: {result}ms");
-            }    
+            }
 
         }
 
         public static void BenchmarkSorts(int[] longLengths, int[] longCounts, int[] shortLengths, int[] shortCounts)
         {
-            Console.WriteLine("Improved Quick Sort:");
-            Utility.BenchmarkSort(Sorts.ImprovedQuickSort, longLengths, longCounts);
-            Console.WriteLine();
             Console.WriteLine("Quick Sort:");
-            Utility.BenchmarkSort(Sorts.QuickSort, longLengths, longCounts);
+            BenchmarkSort(Sorts.QuickSort, longLengths, longCounts);
             Console.WriteLine();
             Console.WriteLine("Merge Sort:");
-            Utility.BenchmarkSort(Sorts.MergeSort, longLengths, longCounts);
+            BenchmarkSort(Sorts.MergeSort, longLengths, longCounts);
             Console.WriteLine();
             Console.WriteLine("Selection Sort:");
-            Utility.BenchmarkSort(Sorts.SelectionSort, shortLengths, shortCounts);
+            BenchmarkSort(Sorts.SelectionSort, shortLengths, shortCounts);
             Console.WriteLine();
             Console.WriteLine("Bubble Sort:");
-            Utility.BenchmarkSort(Sorts.BubbleSort, shortLengths, shortCounts);
+            BenchmarkSort(Sorts.BubbleSort, shortLengths, shortCounts);
+        }
+
+        public static void GenerateCSV(string fileName, Sorts.SortDelegate[] sorts, string[] sortNames)
+        {
+            StreamWriter SW = new StreamWriter(fileName + ".csv");
+            double[][] results = new double[sorts.Length][];
+
+            int elementsCount = 73;
+            int[] lengths = new int[elementsCount];
+            int[] counts = new int[elementsCount];
+
+            int index = 0;
+            for (int interval = 0; interval <= 7; interval++)
+            {
+                for (int r = 1; r <= 9; r++)
+                {
+                    lengths[index] = (int)(r * Math.Pow(10, interval));
+                    counts[index] = GetCount(lengths[index]);
+                    index++;
+                }
+            }
+            lengths[elementsCount - 1] = 100_000_000;
+            counts[elementsCount - 1] = GetCount(100_000_000);
+
+
+            for (int i = 0; i < sorts.Length; i++)
+            {
+                results[i] = new double[lengths.Length];
+                Console.WriteLine(sortNames[i] + ":");
+                for (int r = 0; r < lengths.Length; r++)
+                {
+                    int[][] dataSet = GenerateDataSet(lengths[r], counts[r], -1000, 1000);
+                    double result = AverageSortTimeMs(sorts[i], dataSet);
+                    Console.WriteLine($"{lengths[r]:n0}: {result}ms");
+                    results[i][r] = result;
+                }
+                Console.WriteLine();
+            }
+
+            using (SW)
+            {
+                SW.Write("");
+                foreach (int length in lengths)
+                    SW.Write($", {length:n0}");
+                SW.WriteLine();
+
+                for (int i = 0; i < sorts.Length; i++)
+                {
+                    SW.Write(sortNames[i]);
+                    foreach (double result in results[i])
+                        SW.Write($", {result}");
+                    SW.WriteLine();
+                }
+            }
+
+            int GetCount(int length)
+            {
+                if (length <= 1000)
+                    return 10_000;
+                if (length <= 10_000)
+                    return 1000;
+                if (length <= 100_000)
+                    return 500;
+                if (length <= 1_000_000)
+                    return 20;
+                if (length <= 10_000_000)
+                    return 10;
+                return 5;
+            }
         }
     }
 }
