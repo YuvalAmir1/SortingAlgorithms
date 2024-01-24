@@ -30,7 +30,7 @@ namespace SortingAlgorithms
         public static int[] GenerateRandomArray(int length, int minValue, int maxValue)
         {
             int[] output = new int[length];
-            Random rng = new Random();
+            Random rng = new();
 
             for (int i = 0; i < length; i++)
                 output[i] = rng.Next(minValue, maxValue);
@@ -40,7 +40,6 @@ namespace SortingAlgorithms
 
         public static (bool valid, int[] failedArray, int[] attemptedSort) ValidateSort(Sorts.SortDelegate sort)
         {
-            Random rng = new Random();
             int[][] dataSet;
 
             for (int i = 0; i <= 100; i++)
@@ -118,7 +117,7 @@ namespace SortingAlgorithms
 
         public static void GenerateCSV(string fileName, Sorts.SortDelegate[] sorts, string[] sortNames)
         {
-            StreamWriter SW = new StreamWriter(fileName + ".csv");
+            StreamWriter SW = new(fileName + ".csv");
             double[][] results = new double[sorts.Length][];
 
             int elementsCount = 73;

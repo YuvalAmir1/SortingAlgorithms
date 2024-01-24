@@ -227,10 +227,11 @@ namespace SortingAlgorithms
                 smallestElementIndex = edge;
                 for (int i = edge + 1; i <= endIndex; i++)
                 {
-                    if (arr[i] <= arr[smallestElementIndex])
+                    if (arr[i] < arr[smallestElementIndex])
                         smallestElementIndex = i;
                 }
-                Swap(arr, edge, smallestElementIndex);
+                if (smallestElementIndex != edge)
+                    Swap(arr, edge, smallestElementIndex);
             }
 
             return arr;
@@ -238,9 +239,7 @@ namespace SortingAlgorithms
 
         private static void Swap(int[] arr, int index1, int index2)
         {
-            int temp = arr[index1];
-            arr[index1] = arr[index2];
-            arr[index2] = temp;
+            (arr[index2], arr[index1]) = (arr[index1], arr[index2]);
         }
-    }
+    }   
 }
